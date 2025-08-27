@@ -1,15 +1,21 @@
-# Books App - Actividad 6
+# Buscador de Libros con Detalles y Favoritos - Actividad 6
 
-Aplicación móvil híbrida de búsqueda de libros que consume la API de Google Books para mostrar información detallada de libros, gestionar favoritos y compartir contenido. Proyecto desarrollado como parte de la actividad académica para demostrar el consumo de APIs externas, navegación entre pantallas y almacenamiento local.
+Aplicación móvil híbrida que integra la API de Google Books con almacenamiento local para crear un buscador completo de libros con sistema de favoritos. Proyecto desarrollado para demostrar la integración de APIs complejas, manejo de datos estructurados, almacenamiento local y navegación entre múltiples pantallas.
 
 ## Objetivo de la Actividad
 
-Desarrollar una aplicación móvil que se conecte a una API externa pública, implemente múltiples pantallas con navegación, maneje almacenamiento local y demuestre funcionalidades avanzadas de una aplicación moderna.
+**Integrar una API más compleja, manejar datos estructurados, combinar con almacenamiento local para favoritos y demostrar un flujo de usuario completo.**
+
+La aplicación demuestra:
+- Consumo de API compleja (Google Books API)
+- Integración de datos de API con almacenamiento local  
+- Navegación entre múltiples pantallas
+- Manejo de errores y estados de carga
 
 ## Acceso a la Aplicación
 
 ### Android APK
-**[📱 Descargar APK](https://github.com/tunek12421/Actividad6/raw/main/android/app/build/outputs/apk/debug/app-debug.apk)**
+**[Descargar APK](https://github.com/tunek12421/Actividad6/raw/main/android/app/build/outputs/apk/debug/app-debug.apk)**
 
 #### Instalación en Android:
 1. Descargar el APK desde el enlace directo
@@ -24,30 +30,41 @@ npm run dev
 # Visitar http://localhost:5173
 ```
 
-## Cumplimiento de Requisitos
+## Cumplimiento de Requisitos de la Actividad 6
 
-### Consumo de API Externa
-- Integración con Google Books API para búsqueda de libros
-- Peticiones HTTP realizadas mediante fetch API
-- Manejo de respuestas JSON estructuradas
-- Búsqueda en tiempo real con términos dinámicos
+### Consumo de API Compleja (Google Books API)
+- Integración completa con Google Books API
+- Peticiones HTTP para búsqueda de libros por término
+- Manejo de respuestas JSON estructuradas y complejas
+- Extracción de datos: título, autor, portada, descripción, fecha de publicación
 
-### Navegación y Pantallas Múltiples
-- **Pantalla Principal**: Búsqueda de libros con historial
-- **Pantalla de Detalles**: Información completa del libro
-- **Pantalla de Favoritos**: Gestión de libros guardados
-- Navegación fluida entre pantallas usando Ionic Router
+### Pantalla Principal con Búsqueda
+- Campo de búsqueda implementado
+- Botón de búsqueda funcional
+- Lista de resultados con título, autor y miniatura de portada
+- Manejo de estados vacíos y errores de búsqueda
 
-### Almacenamiento Local
-- Gestión de libros favoritos con LocalStorage
-- Persistencia del historial de búsquedas
-- Configuración de temas (claro/oscuro)
-- Datos almacenados localmente sin dependencia de servidor
+### Navegación a Pantalla de Detalles
+- Navegación al seleccionar libro de la lista
+- Pantalla de detalles con información completa:
+  - Descripción del libro
+  - Fecha de publicación
+  - Información adicional (categorías, páginas, calificación)
 
-### Manejo de Errores
-- Validación de libros no encontrados
-- Manejo de errores de conectividad de red
+### Sistema de Favoritos con Almacenamiento Local
+- Botón "Añadir a Favoritos" en pantalla de detalles
+- Almacenamiento en base de datos local del dispositivo (LocalStorage)
+- Persistencia de datos entre sesiones de la aplicación
+
+### Tercera Pantalla - Lista de Favoritos
+- Pantalla dedicada para ver libros favoritos guardados
+- Acceso desde navegación principal
+- Gestión completa de favoritos (agregar/quitar)
+
+### Manejo de Errores y Estados de Carga
 - Estados de carga durante peticiones API
+- Manejo de errores de conectividad
+- Validación de libros no encontrados
 - Notificaciones informativas para el usuario
 
 ## Funcionalidades Implementadas
@@ -76,9 +93,9 @@ npm run dev
 5. Tocar cualquier libro para ver detalles completos
 
 ### Gestión de Favoritos
-1. **Agregar**: En pantalla de detalles, presionar ⭐ "Agregar a Favoritos"
+1. **Agregar**: En pantalla de detalles, presionar "Agregar a Favoritos"
 2. **Ver favoritos**: Navegar a pestaña "Favoritos" en la barra inferior
-3. **Quitar**: En favoritos o detalles, presionar ⭐ para remover
+3. **Quitar**: En favoritos o detalles, presionar para remover
 4. **Persistencia**: Favoritos se mantienen entre sesiones de la app
 
 ### Funcionalidades Avanzadas
@@ -198,20 +215,21 @@ src/
 
 ## Requisitos Académicos Cumplidos
 
-### Actividad 6 - Consumo de APIs y Navegación
-- ✅ **API Externa**: Google Books API completamente integrada
-- ✅ **Múltiples Pantallas**: 3 pantallas principales con navegación
-- ✅ **Almacenamiento Local**: Favoritos e historial persistentes
-- ✅ **Manejo de Errores**: Estados de error y carga implementados
-- ✅ **Diseño Mobile**: Componentes Ionic responsivos y optimizados
-- ✅ **Build Android**: APK funcional generada y probada
+### Actividad 6 - "Buscador de Libros con Detalles y Favoritos"
+- **API Compleja**: Google Books API completamente integrada
+- **Datos Estructurados**: Manejo completo de respuestas JSON complejas
+- **Flujo Completo**: Búsqueda → Detalles → Favoritos
+- **3 Pantallas**: Principal (búsqueda), Detalles, Favoritos
+- **Almacenamiento Local**: Base de datos local para favoritos (LocalStorage)
+- **Navegación**: Transición fluida entre pantallas
+- **Estados y Errores**: Manejo completo de carga y errores
 
 ### Funcionalidades Extra Implementadas
-- 🚀 **Historial Inteligente**: Búsquedas recientes con acceso rápido
-- 🚀 **Compartir Social**: Integración con sistema nativo de compartir
-- 🚀 **Recomendaciones**: Sistema de libros similares
-- 🚀 **Temas Dinámicos**: Modo claro/oscuro persistente
-- 🚀 **Optimización**: Carga lazy de imágenes y caching
+- **Historial Inteligente**: Búsquedas recientes con acceso rápido
+- **Compartir Social**: Integración con sistema nativo de compartir
+- **Recomendaciones**: Sistema de libros similares
+- **Temas Dinámicos**: Modo claro/oscuro persistente
+- **Optimización**: Carga lazy de imágenes y caching
 
 ## Recursos y Enlaces
 
@@ -222,6 +240,6 @@ src/
 
 ---
 
-**📚 Desarrollado para Desarrollo de Aplicaciones Móviles - Actividad 6**
+**Desarrollado para Desarrollo de Aplicaciones Móviles - Actividad 6**
 
 *Una aplicación completa que demuestra integración de APIs, navegación móvil, almacenamiento local y funcionalidades sociales modernas.*
