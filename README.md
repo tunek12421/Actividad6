@@ -14,6 +14,9 @@ La aplicación demuestra:
 
 ## Acceso a la Aplicación
 
+### Web Application (Vercel)
+**[Probar en navegador](https://actividad6-eight.vercel.app/)**
+
 ### Android APK
 **[Descargar APK](https://github.com/tunek12421/Actividad6/raw/main/android/app/build/outputs/apk/debug/app-debug.apk)**
 
@@ -23,7 +26,7 @@ La aplicación demuestra:
 3. Instalar el archivo APK
 4. Ejecutar "Books App"
 
-### Web Application (Desarrollo Local)
+### Desarrollo Local
 ```bash
 npm install
 npm run dev
@@ -234,6 +237,7 @@ src/
 ## Recursos y Enlaces
 
 - **Repositorio GitHub**: [https://github.com/tunek12421/Actividad6](https://github.com/tunek12421/Actividad6)
+- **Aplicación Web**: [https://actividad6-eight.vercel.app/](https://actividad6-eight.vercel.app/)
 - **Descarga Directa APK**: [app-debug.apk](https://github.com/tunek12421/Actividad6/raw/main/android/app/build/outputs/apk/debug/app-debug.apk)
 - **Google Books API**: [https://developers.google.com/books](https://developers.google.com/books)
 - **Issues y Soporte**: [GitHub Issues](https://github.com/tunek12421/Actividad6/issues)
