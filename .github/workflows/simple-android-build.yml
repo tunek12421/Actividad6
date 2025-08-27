@@ -27,6 +27,9 @@ jobs:
 
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
+      with:
+        api-level: 35
+        build-tools: 35.0.0
 
     - name: Accept Android licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
