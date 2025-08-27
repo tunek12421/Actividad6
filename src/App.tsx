@@ -71,6 +71,7 @@ const App: React.FC = () => {
           onBack={handleBackFromDetails}
           isDark={isDark}
           onToggleTheme={toggleTheme}
+          onBookSelect={handleBookSelect}
         />
       </IonApp>
     );

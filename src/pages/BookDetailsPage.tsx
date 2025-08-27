@@ -17,27 +17,51 @@ import {
   IonCardContent,
   IonToast,
   IonButtons,
-  IonBackButton
+  IonBackButton,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonSpinner,
+  IonActionSheet
 } from '@ionic/react';
-import { heart, heartOutline, star, moon, sunny } from 'ionicons/icons';
+import { heart, heartOutline, star, moon, sunny, share, logoTwitter, logoFacebook, logoWhatsapp, copy } from 'ionicons/icons';
 import { Book } from '../types/book';
 import { addToFavorites, removeFromFavorites, isBookInFavorites } from '../services/favoritesService';
+import { shareBook, shareToSocialMedia } from '../services/shareService';
+import { getSimilarBooks } from '../services/similarBooksService';
 
 interface BookDetailsPageProps {
   book: Book;
   onBack: () => void;
   isDark?: boolean;
   onToggleTheme?: () => void;
+  onBookSelect?: (book: Book) => void;
 }
 
-const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark, onToggleTheme }) => {
+const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark, onToggleTheme, onBookSelect }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastColor, setToastColor] = useState<'success' | 'danger'>('success');
+  const [similarBooks, setSimilarBooks] = useState<Book[]>([]);
+  const [loadingSimilar, setLoadingSimilar] = useState(false);
+  const [showActionSheet, setShowActionSheet] = useState(false);
 
   useEffect(() => {
     setIsFavorite(isBookInFavorites(book.id));
+    loadSimilarBooks();
   }, [book.id]);
+
+  const loadSimilarBooks = async () => {
+    setLoadingSimilar(true);
+    try {
+      const similar = await getSimilarBooks(book, 4);
+      setSimilarBooks(similar);
+    } catch (error) {
+      console.error('Error loading similar books:', error);
+    } finally {
+      setLoadingSimilar(false);
+    }
+  };
 
   const handleFavoriteToggle = async () => {
     try {
@@ -56,6 +80,30 @@ const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark,
       setToastMessage(error instanceof Error ? error.message : 'An error occurred');
       setToastColor('danger');
     }
+  };
+
+  const handleShare = async () => {
+    try {
+      const success = await shareBook(book);
+      if (success) {
+        if (navigator.share) {
+          setToastMessage('Book shared successfully!');
+        } else {
+          setToastMessage('Book details copied to clipboard!');
+        }
+        setToastColor('success');
+      }
+    } catch (error) {
+      setToastMessage('Failed to share book');
+      setToastColor('danger');
+    }
+  };
+
+  const handleSocialShare = (platform: 'twitter' | 'facebook' | 'whatsapp') => {
+    shareToSocialMedia(book, platform);
+    setShowActionSheet(false);
+    setToastMessage(`Opening ${platform} to share...`);
+    setToastColor('success');
   };
 
   const formatPublishedDate = (date?: string) => {
@@ -111,6 +159,31 @@ const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark,
                 <IonIcon icon={isFavorite ? heart : heartOutline} slot="start" />
                 {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
               </IonButton>
+
+              <IonGrid className="ion-no-padding" style={{ marginTop: '16px' }}>
+                <IonRow>
+                  <IonCol size="6">
+                    <IonButton
+                      expand="block"
+                      fill="outline"
+                      onClick={handleShare}
+                    >
+                      <IonIcon icon={share} slot="start" />
+                      Share
+                    </IonButton>
+                  </IonCol>
+                  <IonCol size="6">
+                    <IonButton
+                      expand="block"
+                      fill="outline"
+                      onClick={() => setShowActionSheet(true)}
+                    >
+                      <IonIcon icon={share} slot="start" />
+                      Social
+                    </IonButton>
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
             </IonCol>
             
             <IonCol size="12" size-md="8">
@@ -194,7 +267,95 @@ const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark,
               </IonCard>
             </IonCol>
           </IonRow>
+
+          {/* Similar Books Section */}
+          {similarBooks.length > 0 && (
+            <IonRow style={{ marginTop: '32px' }}>
+              <IonCol size="12">
+                <IonText>
+                  <h2>Similar Books</h2>
+                </IonText>
+              </IonCol>
+              {similarBooks.map((similarBook) => (
+                <IonCol size="12" size-md="6" size-lg="3" key={similarBook.id}>
+                  <IonCard button onClick={() => onBookSelect && onBookSelect(similarBook)}>
+                    <IonCardHeader>
+                      {similarBook.thumbnail && (
+                        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                          <IonImg
+                            src={similarBook.thumbnail}
+                            alt={similarBook.title}
+                            style={{ maxWidth: '80px', height: 'auto' }}
+                          />
+                        </div>
+                      )}
+                      <IonCardTitle style={{ fontSize: '1rem' }}>{similarBook.title}</IonCardTitle>
+                      <IonCardSubtitle>
+                        {similarBook.authors.join(', ')}
+                      </IonCardSubtitle>
+                    </IonCardHeader>
+                    <IonCardContent>
+                      {similarBook.averageRating && (
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
+                          <IonIcon icon={star} color="warning" size="small" />
+                          <IonText style={{ marginLeft: '4px', fontSize: '0.9rem' }}>
+                            {similarBook.averageRating}
+                          </IonText>
+                        </div>
+                      )}
+                    </IonCardContent>
+                  </IonCard>
+                </IonCol>
+              ))}
+            </IonRow>
+          )}
+
+          {loadingSimilar && (
+            <IonRow style={{ marginTop: '32px' }}>
+              <IonCol size="12" style={{ textAlign: 'center' }}>
+                <IonSpinner name="crescent" />
+                <IonText>
+                  <p>Loading similar books...</p>
+                </IonText>
+              </IonCol>
+            </IonRow>
+          )}
         </IonGrid>
+
+        {/* Action Sheet for Social Sharing */}
+        <IonActionSheet
+          isOpen={showActionSheet}
+          onDidDismiss={() => setShowActionSheet(false)}
+          buttons={[
+            {
+              text: 'Share on Twitter',
+              icon: logoTwitter,
+              handler: () => handleSocialShare('twitter')
+            },
+            {
+              text: 'Share on Facebook',
+              icon: logoFacebook,
+              handler: () => handleSocialShare('facebook')
+            },
+            {
+              text: 'Share on WhatsApp',
+              icon: logoWhatsapp,
+              handler: () => handleSocialShare('whatsapp')
+            },
+            {
+              text: 'Copy Link',
+              icon: copy,
+              handler: () => {
+                handleShare();
+                setShowActionSheet(false);
+              }
+            },
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            }
+          ]}
+        />
 
         <IonToast
           isOpen={!!toastMessage}

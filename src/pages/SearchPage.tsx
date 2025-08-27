@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
@@ -20,11 +20,16 @@ import {
   IonText,
   IonToast,
   IonButtons,
-  IonIcon
+  IonIcon,
+  IonChip,
+  IonList,
+  IonItem,
+  IonLabel
 } from '@ionic/react';
-import { moon, sunny } from 'ionicons/icons';
+import { moon, sunny, time, close, search as searchIcon } from 'ionicons/icons';
 import { searchBooks } from '../services/booksService';
 import { Book } from '../types/book';
+import { getSearchHistory, addToSearchHistory, removeFromSearchHistory, getPopularSearches, SearchHistoryItem } from '../services/searchHistoryService';
 
 interface SearchPageProps {
   onBookSelect: (book: Book) => void;
@@ -38,6 +43,18 @@ const SearchPage: React.FC<SearchPageProps> = ({ onBookSelect, isDark, onToggleT
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
+  const [popularSearches] = useState<string[]>(getPopularSearches());
+
+  useEffect(() => {
+    loadSearchHistory();
+  }, []);
+
+  const loadSearchHistory = () => {
+    const history = getSearchHistory();
+    setSearchHistory(history);
+  };
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
@@ -52,6 +69,12 @@ const SearchPage: React.FC<SearchPageProps> = ({ onBookSelect, isDark, onToggleT
     try {
       const results = await searchBooks(searchQuery);
       setBooks(results);
+      
+      // Add to search history
+      addToSearchHistory(searchQuery, results.length);
+      loadSearchHistory();
+      setShowHistory(false);
+      
       if (results.length === 0) {
         setError('No books found. Try a different search term.');
       }
@@ -67,6 +90,34 @@ const SearchPage: React.FC<SearchPageProps> = ({ onBookSelect, isDark, onToggleT
     if (e.detail === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleHistoryItemClick = (query: string) => {
+    setSearchQuery(query);
+    setShowHistory(false);
+    // Auto-search when clicking history item
+    setTimeout(() => {
+      handleSearch();
+    }, 100);
+  };
+
+  const handleRemoveHistoryItem = (id: string, event: React.MouseEvent) => {
+    event.stopPropagation();
+    removeFromSearchHistory(id);
+    loadSearchHistory();
+  };
+
+  const handleSearchFocus = () => {
+    if (searchHistory.length > 0 || popularSearches.length > 0) {
+      setShowHistory(true);
+    }
+  };
+
+  const handleSearchBlur = () => {
+    // Delay hiding to allow clicks on history items
+    setTimeout(() => {
+      setShowHistory(false);
+    }, 200);
   };
 
   return (
@@ -87,14 +138,90 @@ const SearchPage: React.FC<SearchPageProps> = ({ onBookSelect, isDark, onToggleT
         <IonGrid>
           <IonRow>
             <IonCol>
-              <IonSearchbar
-                value={searchQuery}
-                onIonInput={(e) => setSearchQuery(e.detail.value!)}
-                onIonClear={() => setSearchQuery('')}
-                onKeyPress={handleKeyPress}
-                placeholder="Search for books..."
-                showClearButton="focus"
-              />
+              <div style={{ position: 'relative' }}>
+                <IonSearchbar
+                  value={searchQuery}
+                  onIonInput={(e) => setSearchQuery(e.detail.value!)}
+                  onIonClear={() => setSearchQuery('')}
+                  onKeyPress={handleKeyPress}
+                  onIonFocus={handleSearchFocus}
+                  onIonBlur={handleSearchBlur}
+                  placeholder="Search for books..."
+                  showClearButton="focus"
+                />
+
+                {/* Search History and Suggestions */}
+                {showHistory && (searchHistory.length > 0 || popularSearches.length > 0) && (
+                  <IonCard style={{
+                    position: 'absolute',
+                    top: '100%',
+                    left: '0',
+                    right: '0',
+                    zIndex: 1000,
+                    maxHeight: '300px',
+                    overflowY: 'auto',
+                    marginTop: '4px'
+                  }}>
+                    <IonList>
+                      {/* Recent Searches */}
+                      {searchHistory.length > 0 && (
+                        <>
+                          <IonItem>
+                            <IonIcon icon={time} slot="start" color="medium" />
+                            <IonLabel>
+                              <strong>Recent Searches</strong>
+                            </IonLabel>
+                          </IonItem>
+                          {searchHistory.slice(0, 5).map((item) => (
+                            <IonItem
+                              key={item.id}
+                              button
+                              onClick={() => handleHistoryItemClick(item.query)}
+                            >
+                              <IonIcon icon={searchIcon} slot="start" color="medium" />
+                              <IonLabel>
+                                <h3>{item.query}</h3>
+                                <p>{item.resultsCount} results • {new Date(item.timestamp).toLocaleDateString()}</p>
+                              </IonLabel>
+                              <IonButton
+                                fill="clear"
+                                size="small"
+                                slot="end"
+                                onClick={(e) => handleRemoveHistoryItem(item.id, e)}
+                              >
+                                <IonIcon icon={close} />
+                              </IonButton>
+                            </IonItem>
+                          ))}
+                        </>
+                      )}
+                      
+                      {/* Popular Searches */}
+                      {popularSearches.length > 0 && (
+                        <>
+                          <IonItem>
+                            <IonIcon icon={searchIcon} slot="start" color="medium" />
+                            <IonLabel>
+                              <strong>Popular Searches</strong>
+                            </IonLabel>
+                          </IonItem>
+                          <div style={{ padding: '8px 16px' }}>
+                            {popularSearches.slice(0, 8).map((search, index) => (
+                              <IonChip
+                                key={index}
+                                onClick={() => handleHistoryItemClick(search)}
+                                style={{ margin: '4px', cursor: 'pointer' }}
+                              >
+                                <IonLabel>{search}</IonLabel>
+                              </IonChip>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </IonList>
+                  </IonCard>
+                )}
+              </div>
             </IonCol>
           </IonRow>
           <IonRow>
@@ -109,6 +236,15 @@ const SearchPage: React.FC<SearchPageProps> = ({ onBookSelect, isDark, onToggleT
             </IonCol>
           </IonRow>
         </IonGrid>
+
+        {/* Search Statistics */}
+        {hasSearched && !isLoading && books.length > 0 && (
+          <div style={{ textAlign: 'center', margin: '16px 0' }}>
+            <IonText color="medium">
+              <p>Found {books.length} books for "{searchQuery}"</p>
+            </IonText>
+          </div>
+        )}
 
         {isLoading && (
           <div style={{ textAlign: 'center', margin: '20px 0' }}>
