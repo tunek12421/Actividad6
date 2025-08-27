@@ -1,4 +1,4 @@
-package com.example.app;
+package com.tunek.booksapp;
 
 import com.getcapacitor.BridgeActivity;
 

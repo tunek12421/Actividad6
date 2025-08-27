@@ -13,7 +13,6 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
-  IonImg,
   IonText,
   IonButton,
   IonIcon,
@@ -25,6 +24,7 @@ import {
 import { trash, refresh, moon, sunny } from 'ionicons/icons';
 import { FavoriteBook } from '../types/book';
 import { getFavorites, removeFromFavorites } from '../services/favoritesService';
+import BookImage from '../components/BookImage';
 
 interface FavoritesPageProps {
   onBookSelect: (book: FavoriteBook) => void;
@@ -110,15 +110,13 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ onBookSelect, isDark, onT
                   <IonCol size="12" size-md="6" size-lg="4" key={book.id}>
                     <IonCard>
                       <IonCardHeader>
-                        {book.thumbnail && (
-                          <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-                            <IonImg
-                              src={book.thumbnail}
-                              alt={book.title}
-                              style={{ maxWidth: '100px', height: 'auto' }}
-                            />
-                          </div>
-                        )}
+                        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                          <BookImage
+                            src={book.thumbnail}
+                            alt={book.title}
+                            style={{ maxWidth: '100px', height: 'auto' }}
+                          />
+                        </div>
                         <IonCardTitle>{book.title}</IonCardTitle>
                         <IonCardSubtitle>
                           {book.authors.join(', ')}

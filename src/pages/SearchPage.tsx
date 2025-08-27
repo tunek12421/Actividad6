@@ -15,7 +15,6 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
-  IonImg,
   IonSpinner,
   IonText,
   IonToast,
@@ -28,6 +27,7 @@ import {
 } from '@ionic/react';
 import { moon, sunny, time, close, search as searchIcon } from 'ionicons/icons';
 import { searchBooks } from '../services/booksService';
+import BookImage from '../components/BookImage';
 import { Book } from '../types/book';
 import { getSearchHistory, addToSearchHistory, removeFromSearchHistory, getPopularSearches, SearchHistoryItem } from '../services/searchHistoryService';
 
@@ -269,15 +269,13 @@ const SearchPage: React.FC<SearchPageProps> = ({ onBookSelect, isDark, onToggleT
               <IonCol size="12" size-md="6" size-lg="4" key={book.id}>
                 <IonCard button onClick={() => onBookSelect(book)}>
                   <IonCardHeader>
-                    {book.thumbnail && (
-                      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-                        <IonImg
-                          src={book.thumbnail}
-                          alt={book.title}
-                          style={{ maxWidth: '100px', height: 'auto' }}
-                        />
-                      </div>
-                    )}
+                    <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                      <BookImage
+                        src={book.thumbnail}
+                        alt={book.title}
+                        style={{ maxWidth: '100px', height: 'auto' }}
+                      />
+                    </div>
                     <IonCardTitle>{book.title}</IonCardTitle>
                     <IonCardSubtitle>
                       {book.authors.join(', ')}

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">weather-app</string>
-    <string name="title_activity_main">weather-app</string>
-    <string name="package_name">com.example.app</string>
-    <string name="custom_url_scheme">com.example.app</string>
+    <string name="app_name">Books App</string>
+    <string name="title_activity_main">Books App</string>
+    <string name="package_name">com.tunek.booksapp</string>
+    <string name="custom_url_scheme">com.tunek.booksapp</string>
 </resources>

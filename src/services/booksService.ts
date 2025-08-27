@@ -49,6 +49,12 @@ export const getBookById = async (id: string): Promise<Book | null> => {
 const transformGoogleBookToBook = (item: GoogleBookItem): Book => {
   const { volumeInfo } = item;
   
+  // Helper function to convert HTTP image URLs to HTTPS for Capacitor compatibility
+  const ensureHttpsImage = (imageUrl?: string): string | undefined => {
+    if (!imageUrl) return undefined;
+    return imageUrl.replace(/^http:\/\//, 'https://');
+  };
+  
   return {
     id: item.id,
     title: volumeInfo.title || 'Unknown Title',
@@ -58,7 +64,7 @@ const transformGoogleBookToBook = (item: GoogleBookItem): Book => {
     pageCount: volumeInfo.pageCount,
     categories: volumeInfo.categories,
     averageRating: volumeInfo.averageRating,
-    thumbnail: volumeInfo.imageLinks?.thumbnail || volumeInfo.imageLinks?.smallThumbnail,
+    thumbnail: ensureHttpsImage(volumeInfo.imageLinks?.thumbnail || volumeInfo.imageLinks?.smallThumbnail),
     language: volumeInfo.language,
     publisher: volumeInfo.publisher
   };

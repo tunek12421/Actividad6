@@ -1,23 +1,23 @@
-# 📚 Aplicación de Libros - Actividad 6
+# Aplicación de Libros - Actividad 6
 
 Una aplicación móvil moderna de búsqueda de libros construida con Ionic React, que incluye integración con la API de Google Books, gestión local de favoritos y funciones sociales avanzadas.
 
-## 🚀 Características
+## Características
 
 ### Funcionalidad Principal
-- **📖 Búsqueda de Libros**: Búsqueda en tiempo real usando la API de Google Books
-- **💖 Gestión de Favoritos**: Guarda y organiza tus libros favoritos localmente
-- **🔍 Detalles de Libros**: Información completa de libros con calificaciones, descripciones y metadatos
-- **📱 Diseño Mobile-First**: Diseño responsivo optimizado para dispositivos móviles
+- **Búsqueda de Libros**: Búsqueda en tiempo real usando la API de Google Books
+- **Gestión de Favoritos**: Guarda y organiza tus libros favoritos localmente
+- **Detalles de Libros**: Información completa de libros con calificaciones, descripciones y metadatos
+- **Diseño Mobile-First**: Diseño responsivo optimizado para dispositivos móviles
 
 ### Características Avanzadas
-- **📤 Compartir Libros**: Comparte libros a través de la API nativa o plataformas de redes sociales (Twitter, Facebook, WhatsApp)
-- **🔗 Libros Similares**: Recomendaciones impulsadas por IA basadas en autor, categoría y análisis de contenido
-- **🕒 Historial de Búsqueda**: Sugerencias inteligentes con búsquedas recientes y términos populares
-- **🌙 Soporte de Temas**: Modo Oscuro/Claro con preferencias persistentes
-- **📊 Estadísticas de Búsqueda**: Seguimiento de resultados de búsqueda y participación del usuario
+- **Compartir Libros**: Comparte libros a través de la API nativa o plataformas de redes sociales (Twitter, Facebook, WhatsApp)
+- **Libros Similares**: Recomendaciones impulsadas por IA basadas en autor, categoría y análisis de contenido
+- **Historial de Búsqueda**: Sugerencias inteligentes con búsquedas recientes y términos populares
+- **Soporte de Temas**: Modo Oscuro/Claro con preferencias persistentes
+- **Estadísticas de Búsqueda**: Seguimiento de resultados de búsqueda y participación del usuario
 
-## 📱 Acceder a la Aplicación
+## Acceder a la Aplicación
 
 ### Aplicación Web
 **[Probar en Navegador](http://localhost:8100/)** *(Servidor de Desarrollo)*
@@ -27,9 +27,14 @@ Una aplicación móvil moderna de búsqueda de libros construida con Ionic React
 
 #### Cómo obtener el APK:
 1. Ve a la pestaña **[GitHub Actions](https://github.com/username/Actividad6/actions)**
-2. Haz clic en el build exitoso más reciente
-3. Descarga el artefacto `books-app-debug` o `books-app-release`
-4. Extrae el archivo APK e instala en tu dispositivo Android
+2. Haz clic en el workflow "Build Android APK" o "Simple Android Build"
+3. Selecciona el build exitoso más reciente
+4. Descarga el artefacto `books-app-debug` o `debug-apk`
+5. Extrae el archivo APK e instala en tu dispositivo Android
+
+#### Workflows Disponibles:
+- **Build Android APK**: Workflow completo con debug y release
+- **Simple Android Build**: Workflow simplificado solo con debug APK
 
 #### Instalación en Android:
 1. Descarga el artefacto ZIP de GitHub Actions
@@ -38,7 +43,7 @@ Una aplicación móvil moderna de búsqueda de libros construida con Ionic React
 4. Instala el archivo APK
 5. Ejecuta la Aplicación de Libros
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 - **Framework**: Ionic React con Capacitor
 - **Lenguaje**: TypeScript
@@ -47,10 +52,10 @@ Una aplicación móvil moderna de búsqueda de libros construida con Ionic React
 - **Almacenamiento**: Local Storage para favoritos e historial de búsqueda
 - **Componentes UI**: Componentes Ionic con temas personalizados
 
-## 📦 Instalación y Configuración
+## Instalación y Configuración
 
 ### Prerrequisitos
-- Node.js (18+)
+- Node.js (20+) - **Requerido para Capacitor CLI**
 - npm o yarn
 - Android Studio (para builds de Android)
 
@@ -84,7 +89,7 @@ cd android
 ./gradlew assembleRelease # APK Release
 ```
 
-## 🔧 Estructura del Proyecto
+## Estructura del Proyecto
 
 ```
 src/
@@ -103,34 +108,34 @@ src/
 └── theme.css           # Estilos globales y temas oscuro/claro
 ```
 
-## 🌟 Análisis Profundo de Características
+## Análisis Profundo de Características
 
-### 🔍 Sistema de Búsqueda Inteligente
+### Sistema de Búsqueda Inteligente
 - **Integración API en Tiempo Real**: Búsqueda en vivo con API de Google Books
 - **Historial Inteligente**: Búsquedas recientes con conteos de resultados y fechas
 - **Sugerencias Populares**: Términos de búsqueda populares predefinidos
 - **Auto-completar**: Búsqueda con un clic desde el dropdown del historial
 
-### 📚 Recomendaciones Inteligentes de Libros
+### Recomendaciones Inteligentes de Libros
 El algoritmo de libros similares usa 4 estrategias inteligentes:
 1. **Basado en Autor**: Libros del mismo autor
 2. **Basado en Categoría**: Libros en géneros similares  
 3. **Basado en Palabras Clave**: Análisis de similitud de contenido de títulos
 4. **Basado en Calificación**: Libros con calificaciones de usuario similares
 
-### 📤 Sistema de Compartir Avanzado
+### Sistema de Compartir Avanzado
 - **API de Compartir Nativa**: Usa el compartir nativo del dispositivo cuando está disponible
 - **Integración de Redes Sociales**: Compartir directo a Twitter, Facebook, WhatsApp
 - **Respaldo de Portapapeles**: Copia texto formateado cuando no hay compartir nativo disponible
 - **Contenido Rico**: Mensajes formateados con detalles del libro y enlaces de búsqueda
 
-### 💾 Gestión de Datos Local
+### Gestión de Datos Local
 - **Almacenamiento de Favoritos**: Libros guardados localmente con marcas de tiempo
 - **Historial de Búsqueda**: Historial de búsqueda persistente con seguimiento de resultados
 - **Preferencias de Tema**: Elección de tema del usuario recordada entre sesiones
 - **Privacidad Primero**: Todos los datos del usuario almacenados localmente en el dispositivo
 
-## 🎨 Interfaz de Usuario
+## Interfaz de Usuario
 
 ### Diseño Responsivo
 - **Mobile-First**: Optimizado para dispositivos móviles
@@ -143,7 +148,7 @@ El algoritmo de libros similares usa 4 estrategias inteligentes:
 - **Colores Consistentes**: Contraste apropiado en ambos temas
 - **Transiciones Suaves**: Cambio de tema animado
 
-## 🔄 Builds Automatizados
+## Builds Automatizados
 
 ### Flujo de Trabajo de GitHub Actions
 El proyecto incluye generación automatizada de APK:
@@ -154,31 +159,31 @@ El proyecto incluye generación automatizada de APK:
 - **Integración de Release**: Commits etiquetados crean releases de GitHub
 
 ### Proceso de Build
-1. **Configuración de Entorno**: Node.js 18 + Java 17 + Android SDK
+1. **Configuración de Entorno**: Node.js 20 + Java 17 + Android SDK
 2. **Instalación de Dependencias**: `npm ci` para builds reproducibles
 3. **Build Web**: `npm run build` crea assets web optimizados
 4. **Sync de Capacitor**: Actualiza proyecto nativo de Android
 5. **Generación de APK**: Gradle construye APKs debug y release
 6. **Subida de Artefactos**: APKs subidos como artefactos de GitHub Actions
 
-## 🚨 Cumplimiento de Requisitos
+## Cumplimiento de Requisitos
 
-### Requisitos de Actividad 6 ✅
-- **✅ Integración API de Google Books**: Búsqueda de libros en tiempo real
-- **✅ Múltiples Pantallas**: Búsqueda, Detalles, Favoritos con navegación
-- **✅ Almacenamiento Local**: Favoritos guardados persistentemente en dispositivo
-- **✅ Manejo de Errores**: Errores de red, resultados vacíos, fallos de API
-- **✅ Estados de Carga**: Spinners e indicadores de carga
-- **✅ Diseño Mobile-First**: Componentes Ionic responsivos
+### Requisitos de Actividad 6
+- **Integración API de Google Books**: Búsqueda de libros en tiempo real
+- **Múltiples Pantallas**: Búsqueda, Detalles, Favoritos con navegación
+- **Almacenamiento Local**: Favoritos guardados persistentemente en dispositivo
+- **Manejo de Errores**: Errores de red, resultados vacíos, fallos de API
+- **Estados de Carga**: Spinners e indicadores de carga
+- **Diseño Mobile-First**: Componentes Ionic responsivos
 
-### Características Adicionales ✅
-- **✅ Búsqueda Avanzada**: Historial y sugerencias
-- **✅ Compartir Social**: Soporte para múltiples plataformas
-- **✅ Recomendaciones de Libros**: Libros similares impulsados por IA
-- **✅ Soporte de Temas**: Cambio de modo Oscuro/Claro
-- **✅ Generación de APK**: Builds móviles automatizados
+### Características Adicionales
+- **Búsqueda Avanzada**: Historial y sugerencias
+- **Compartir Social**: Soporte para múltiples plataformas
+- **Recomendaciones de Libros**: Libros similares impulsados por IA
+- **Soporte de Temas**: Cambio de modo Oscuro/Claro
+- **Generación de APK**: Builds móviles automatizados
 
-## 📊 Rendimiento y Optimización
+## Rendimiento y Optimización
 
 - **Eficiencia de API**: Cache inteligente y optimización de peticiones
 - **Carga Perezosa**: Componentes e imágenes cargados bajo demanda
@@ -186,14 +191,14 @@ El proyecto incluye generación automatizada de APK:
 - **Imágenes Optimizadas**: Miniaturas de portadas de libros responsivas
 - **Tamaño de Bundle**: Build optimizado con tree-shaking
 
-## 🔐 Privacidad y Seguridad
+## Privacidad y Seguridad
 
 - **Solo Datos Locales**: Sin seguimiento de usuario o análisis
 - **Privacidad de API**: Solo consultas de búsqueda enviadas a API de Google Books
 - **Compartir Seguro**: Usa APIs oficiales de plataforma para compartir social
 - **Sin Datos Personales**: Sin recolección de información personal
 
-## 📱 Requisitos del Sistema
+## Requisitos del Sistema
 
 ### Versión Web
 - Navegador moderno con soporte ES2020
@@ -205,7 +210,41 @@ El proyecto incluye generación automatizada de APK:
 - ~4MB espacio de almacenamiento
 - Opcional: Permiso de cámara para futuro escaneo de código de barras
 
-## 🏗️ Desarrollo y Contribución
+## Troubleshooting
+
+### Build Issues
+Si encuentras problemas al generar APK:
+
+1. **Dependencias de Gradle**: Limpia el proyecto local:
+   ```bash
+   cd android
+   ./gradlew clean
+   ./gradlew assembleDebug
+   ```
+
+2. **Versiones de Node.js**: Asegúrate de usar Node.js 20+:
+   ```bash
+   node --version  # Debe ser >=20.0.0
+   nvm use 20      # Si usas nvm
+   ```
+
+3. **Android SDK**: Verifica que tengas Android SDK instalado:
+   ```bash
+   echo $ANDROID_HOME
+   $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --list
+   ```
+
+4. **Capacitor Sync**: Si hay problemas con Capacitor:
+   ```bash
+   npx cap sync android
+   ```
+
+### GitHub Actions Fallback
+Si el workflow principal falla, usa el workflow simplificado:
+- Ve a Actions → "Simple Android Build"
+- Ejecuta manualmente con "Run workflow"
+
+## Desarrollo y Contribución
 
 ### Scripts Disponibles
 - `npm run dev` - Iniciar servidor de desarrollo (http://localhost:8100)
@@ -218,7 +257,7 @@ El proyecto incluye generación automatizada de APK:
 - **Arquitectura de Componentes**: Componentes modulares y reutilizables
 - **Capa de Servicio**: Lógica de negocio separada
 
-## 📄 Licencia y Uso Académico
+## Licencia y Uso Académico
 
 Este proyecto se desarrolla como parte del coursework de Desarrollo de Aplicaciones Móviles - Actividad 6. 
 
@@ -230,7 +269,7 @@ Este proyecto se desarrolla como parte del coursework de Desarrollo de Aplicacio
 
 ---
 
-**Construido con ❤️ para el Curso de Desarrollo de Aplicaciones Móviles - Actividad 6**
+**Construido para el Curso de Desarrollo de Aplicaciones Móviles - Actividad 6**
 
 **Demo en Vivo**: http://localhost:8100/ (Desarrollo)  
 **GitHub Actions**: Builds automáticos de APK disponibles en pestaña Actions

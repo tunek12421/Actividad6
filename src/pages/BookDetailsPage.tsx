@@ -7,7 +7,6 @@ import {
   IonToolbar,
   IonButton,
   IonIcon,
-  IonImg,
   IonText,
   IonChip,
   IonGrid,
@@ -29,6 +28,7 @@ import { Book } from '../types/book';
 import { addToFavorites, removeFromFavorites, isBookInFavorites } from '../services/favoritesService';
 import { shareBook, shareToSocialMedia } from '../services/shareService';
 import { getSimilarBooks } from '../services/similarBooksService';
+import BookImage from '../components/BookImage';
 
 interface BookDetailsPageProps {
   book: Book;
@@ -141,15 +141,13 @@ const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark,
         <IonGrid>
           <IonRow>
             <IonCol size="12" size-md="4">
-              {book.thumbnail && (
-                <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                  <IonImg
-                    src={book.thumbnail}
-                    alt={book.title}
-                    style={{ maxWidth: '200px', height: 'auto', borderRadius: '8px' }}
-                  />
-                </div>
-              )}
+              <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <BookImage
+                  src={book.thumbnail}
+                  alt={book.title}
+                  style={{ maxWidth: '200px', height: 'auto', borderRadius: '8px' }}
+                />
+              </div>
               <IonButton
                 expand="block"
                 fill={isFavorite ? 'solid' : 'outline'}
@@ -280,15 +278,13 @@ const BookDetailsPage: React.FC<BookDetailsPageProps> = ({ book, onBack, isDark,
                 <IonCol size="12" size-md="6" size-lg="3" key={similarBook.id}>
                   <IonCard button onClick={() => onBookSelect && onBookSelect(similarBook)}>
                     <IonCardHeader>
-                      {similarBook.thumbnail && (
-                        <div style={{ textAlign: 'center', marginBottom: '10px' }}>
-                          <IonImg
-                            src={similarBook.thumbnail}
-                            alt={similarBook.title}
-                            style={{ maxWidth: '80px', height: 'auto' }}
-                          />
-                        </div>
-                      )}
+                      <div style={{ textAlign: 'center', marginBottom: '10px' }}>
+                        <BookImage
+                          src={similarBook.thumbnail}
+                          alt={similarBook.title}
+                          style={{ maxWidth: '80px', height: 'auto' }}
+                        />
+                      </div>
                       <IonCardTitle style={{ fontSize: '1rem' }}>{similarBook.title}</IonCardTitle>
                       <IonCardSubtitle>
                         {similarBook.authors.join(', ')}
